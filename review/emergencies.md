@@ -1,69 +1,54 @@
-# Emergencies
+# 긴급 사태
 
-Sometimes there are emergency CLs that must pass through the entire code review
-process as quickly as
-possible.
+가끔은 전체 코드 리뷰 절차를 최대한 빨리 통과해야 하는 긴급한 CL이 있습니다.
 
 
 
-## What Is An Emergency? {#what}
+## 긴급 사태가 뭔가요? {#what}
 
-An emergency CL would be a **small** change that: allows a major launch to
-continue instead of rolling back, fixes a bug significantly affecting users in
-production, handles a pressing legal issue, closes a major security hole, etc.
+긴급한 CL은 다음 중 하나를 포함한 **작은** 수정입니다:
 
-In emergencies we really do care about the speed of the entire code review
-process, not just the [speed of response](reviewer/speed.md). In this case
-*only*, the reviewer should care more about the speed of the review and the
-correctness of the code (does it actually resolve the emergency?) than anything
-else. Also (perhaps obviously) such reviews should take priority over all other
-code reviews, when they come up.
+  - 주요 출시를 롤백하지 않고 계속 진행하게 합니다.
+  - 제품 사용자에게 큰 영향을 주는 버그를 수정합니다.
+  - 긴급한 법적 이슈를 다룹니다.
+  - 주요 보안 취약점을 해결합니다.
+  - 등등.
 
-However, after the emergency is resolved you should look over the emergency CLs
-again and give them a [more thorough review](reviewer/looking-for.md).
 
-## What Is NOT An Emergency? {#not}
+긴급 사태에서 우리는 [응답 속도](reviewer/speed.md)뿐만 아니라 전체 코드 리뷰 절차의 속도에 대해서 아주 신경써야 합니다.
+이 경우*에만*, 리뷰어는 다른 것보다 리뷰 속도와 (정말로 긴급 사태를 해결하는지) 코드의 정확함에 신경 써야 합니다.
+또, 이런 리뷰는 다른 모든 코드 리뷰보다 우선순위를 높게 가져야 합니다.
 
-To be clear, the following cases are *not* an emergency:
+하지만, 긴급 사태가 해결되고 나면, 긴급 CL들을 다시 살펴보고 [더 철저한 리뷰](reviewer/looking-for.md)를 해야 합니다.
 
--   Wanting to launch this week rather than next week (unless there is some
-    actual [hard deadline](#deadlines) for launch such as a partner agreement).
--   The developer has worked on a feature for a very long time and they really
-    want to get the CL in.
--   The reviewers are all in another timezone where it is currently nighttime or
-    they are away on an off-site.
--   It is the end of the day on a Friday and it would just be great to get this
-    CL in before the developer leaves for the weekend.
--   A manager says that this review has to be complete and the CL checked in
-    today because of a [soft (not hard) deadline](#deadlines).
--   Rolling back a CL that is causing test failures or build breakages.
+## 긴급 사태가 아닌 것은 뭔가요? {#not}
 
-And so on.
+분명히 말해 다음과 같은 경우는 긴급 사태가 *아닙니다*:
 
-## What Is a Hard Deadline? {#deadlines}
+  - (동업자 계약과 같은 정말 [빡센 마감](#deadlines)이 있지 않다면) 다음 주가 아니라 이번주에 출시하고 싶은 경우.
+  - 아주 긴 시간 동안 기능을 개발해 왔고 정말 그 CL을 반영하고 싶은 경우.
+  - 리뷰어가 전부 다른 시간대에 있어서 지금 밤이거나 퇴근한 경우.
+  - 금요일 퇴근 시간이 다 되어가서 주말에 개발자가 부재하기 전에 그냥 이 CL을 반영하는게 좋아 보이는 경우.
+  - 매니저가 [유연한 (빡세지 않은) 마감]()#deadlines)때문에 이 리뷰는 반드시 완료되어야 하고 CL은 오늘 검토되어야 한다고 말하는 경우.
+  - 테스트가 실패하거나 빌드를 깨는 CL을 롤백하는 경우.
+  - 등등.
 
-A hard deadline is one where **something disastrous would happen** if you miss
-it. For example:
+## 빡센 마감은 뭔가요? {#deadlines}
 
--   Submitting your CL by a certain date is necessary for a contractual
-    obligation.
--   Your product will completely fail in the marketplace if not released by a
-    certain date.
--   Some hardware manufacturers only ship new hardware once a year. If you miss
-    the deadline to submit code to them, that could be disastrous, depending on
-    what type of code you're trying to ship.
+못지키면 **뭔가 엄청난 참사가 일어날 수 있는** 것을 빡센 마감이라고 합니다.
+예를 들면:
 
-Delaying a release for a week is not disastrous. Missing an important conference
-might be disastrous, but often is not.
+  - 특정 날짜까지 CL을 제출하도록 계약상 의무에 명시된 경우.
+  - 특정 날짜까지 배포하지 않으면 제품이 시장에서 완전히 실패할 경우.
+  - 어떤 하드웨어 제조사가 1년에 한번만 새로운 하드웨어에 (코드를) 싣는 경우. 만약 여기에 코드를 제출하는 것을 놓치면, 어떤 코드를 실을려는지에 따라 대참사가 일어날 수 있습니다. 
 
-Most deadlines are soft deadlines, not hard deadlines. They represent a desire
-for a feature to be done by a certain time. They are important, but you
-shouldn't be sacrificing code health to make them.
+일주일 정도 배포를 연기하는 일은 끔찍한 일이 아닙니다.
+중요한 미팅을 놓치는 것은 참사일 순 있는데, 보통은 아닙니다.
 
-If you have a long release cycle (several weeks) it can be tempting to sacrifice
-code review quality to get a feature in before the next cycle. However, this
-pattern, if repeated, is a common way for projects to build up overwhelming
-technical debt. If developers are routinely submitting CLs near the end of the
-cycle that "must get in" with only superficial review, then the team should
-modify its process so that large feature changes happen early in the cycle and
-have enough time for good review.
+대부분의 마감은 빡세지 않고 유연합니다.
+보통은 특정 시간까지 기능이 완료되길 원하는 바람을 나타냅니다.
+물론 이것도 중요하지만, 건강한 코드를 희생할 만큼은 아닙니다.
+
+만약 배포 일정이 여러 주에 걸칠 정도로 아주 길다면, 다음 일정이 되기 전에 코드 리뷰 품질을 희생하면서 기능을 넣고 싶은 유혹에 빠질 수 있습니다.
+하지만, 이런 일이 반복된다면, 프로젝트가 대응하기 힘든 기술적 빚에 시달리게 되는 것은 흔한 일입니다.
+개발자가 피상적인 리뷰만 받고 "반드시 포함되어야 한다"고 일정이 거의 끝나갈 때 CL을 올리는 일이 일상이 되었다면, 팀 전체의 절차를 수정해서 큰 기능은 일정 초반에 반영해서 좋은 리뷰를 충분히 할 수 있도록 해야 합니다.
