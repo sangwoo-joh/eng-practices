@@ -1,14 +1,12 @@
-# The CL author's guide to getting through code review
+# CL 저자를 위한 코드 리뷰 가이드
 
-The pages in this section contain best practices for developers going through
-code review. These guidelines should help you get through reviews faster and
-with higher-quality results. You don't have to read them all, but they are
-intended to apply to every Google developer, and many people have found it
-helpful to read the whole set.
+이 섹션에 있는 페이지에는 개발자가 코드 리뷰를 겪는데 필요한 모범 사례를 담고 있습니다.
+이 지침은 코드 리뷰를 좀더 빠르게 통과하여 높은 수준의 결과를 얻도록 도와줄 것입니다.
+전부 읽을 필요는 없지만, 모든 구글 개발자에게 적용하도록 의도된 것이라 전부 읽는 것이 많은 사람에게 도움 될 것입니다.
 
--   [Writing Good CL Descriptions](cl-descriptions.md)
--   [Small CLs](small-cls.md)
--   [How to Handle Reviewer Comments](handling-comments.md)
+  - [좋은 CL 설명 작성하기](cl-descriptions.md)
+  - [작은 CL](small-cls.md)
+  - [리뷰어의 지적을 상대하는 방법](handling-comments.md)
 
-See also [How to Do a Code Review](../reviewer/), which gives detailed guidance
-for code reviewers.
+
+코드 리뷰어를 위한 더 자세한 가이드는 [코드 리뷰를 하는 방법](../reviewer/)을 참조하세요.
