@@ -1,76 +1,46 @@
-# Small CLs
+# 작은 CL
+
+## 왜 작은 CL을 작성해야 하나요? {#why}
+
+작고 단순한 CL은 다음과 같은 특징을 갖습니다:
+  - **더 빠르게 리뷰됩니다.** 리뷰어가 작은 CL을 5분씩 여러번 리뷰하는 일이 큰 CL을 리뷰하기 위해서 30분을 따로 빼두는 것보다 쉽습니다.
+  - **더 철저하게 리뷰됩니다.** 수정 사항이 크면, 리뷰어와 저자는 많은 양의 자세한 설명 때문에 왔다갔다 해야해서 좌절하게 됩니다.
+    가끔은 중요한 부분을 놓치거나 유야무야하게 됩니다.
+  - **버그가 생길 가능성이 줄어듭니다.** 작은 수정을 하고 있기 때문에, 당신과 당신의 리뷰어는 CL이 어떤 영향을 끼치게 되고 어떤 버그가 생기게 될지 좀더 효과적으로 추론할 수 있습니다.
+  - **반려되어도 일이 덜 낭비됩니다.** 커다란 CL을 작성했는데 리뷰어가 전체적인 방향이 틀렸다고 해버리면, 엄청난 양의 일을 낭비한 셈입니다.
+  - **머지하기 쉽습니다.** 큰 CL을 작업하는 일은 시간이 많이 소요되기 때문에, 실제로 머지 시에 충돌이 많을 것이고 그러면 더 자주 머지해야 합니다.
+  - **잘 디자인 하기 쉽습니다.** 커다란 수정의 자세한 사항을 전부 개선하는 것보다 디자인과 코드의 상태를 갈고 닦기 훨씬 쉽습니다.
+  - **리뷰 도중 방해를 덜 받습니다.** 전체 수정 중에서 독립적인 일부만 제출해서 리뷰가 진행되는 동안 계속 코딩할 수 있습니다.
+  - **롤백하기 쉽습니다.** 큰 CL은 처음 제출한 CL과 롤백 CL 사이에 업데이트되는 파일을 건드릴 확률이 높아서 롤백을 복잡하게 만듭니다.
 
 
+**리뷰어는 수정이 너무 크다는 이유만으로 당신의 CL을 반려할 재량이 있다**는 것을 명심해두십시오.
+보통은 당신의 기여에 감사하겠지만, 어떻게든 일련의 작은 수정으로 만들 것을 요청할 것입니다.
+수정을 이미 작성한 이후에 작은 수정으로 쪼개는 일은 큰 작업이 되거나, 리뷰어가 왜 당신의 큰 수정을 받아들여야 하는지에 대한 긴 논쟁을 하게 될 수도 있습니다.
+처음부터 작은 CL을 작성하는게 훨씬 쉽습니다.
 
-## Why Write Small CLs? {#why}
+## 작은 게 뭔가요? {#what_is_small}
 
-Small, simple CLs are:
+보통 CL의 "옳은" 크기는 **하나의 독립적인 수정**입니다. 이 뜻은:
+  - CL이 **딱 하나**만을 다루는 최소한의 수정입니다.
+    보통 한번에 전체 기능을 다 하기보다는 그 기능의 딱 한 부분만을 뜻합니다.
+    대개는 너무 큰 CL에서 실수하는 것보다 아주 작은 CL을 작성하다가 실수하는게 더 낫습니다.
+    리뷰어랑 적당한 크기가 얼마일지 얘기해보는 것도 좋습니다.
+  - CL은 [관련된 테스트 코드를 포함](#test_code)해야 합니다.
+  - 리뷰어가 CL을 이해하기 위해 필요한 모든 것이 CL, CL에 대한 설명, 기존 코드베이스, 또는 이미 리뷰한 CL에 있어야 합니다. 나중에 개발해야 하는 사항은 제외합니다.
+  - CL이 반영되고 난 이후에도 사용자와 개발자를 위해 시스템이 잘 동작해야 합니다.
+  - 의미를 이해하기 어려울 정도로 CL이 작으면 안됩니다. 새로운 API를 추가한다면, API 사용법도 같은 CL에 포함해서 그 API가 어떻게 사용될지 리뷰어가 이해하기 쉽도록 해야 합니다. 이렇게 해서 사용하지 않는 API가 반영되는 것도 막습니다.
 
--   **Reviewed more quickly.** It's easier for a reviewer to find five minutes
-    several times to review small CLs than to set aside a 30 minute block to
-    review one large CL.
--   **Reviewed more thoroughly.** With large changes, reviewers and authors tend
-    to get frustrated by large volumes of detailed commentary shifting back and
-    forth—sometimes to the point where important points get missed or dropped.
--   **Less likely to introduce bugs.** Since you're making fewer changes, it's
-    easier for you and your reviewer to reason effectively about the impact of
-    the CL and see if a bug has been introduced.
--   **Less wasted work if they are rejected.** If you write a huge CL and then
-    your reviewer says that the overall direction is wrong, you've wasted a lot
-    of work.
--   **Easier to merge.** Working on a large CL takes a long time, so you will
-    have lots of conflicts when you merge, and you will have to merge
-    frequently.
--   **Easier to design well.** It's a lot easier to polish the design and code
-    health of a small change than it is to refine all the details of a large
-    change.
--   **Less blocking on reviews.** Sending self-contained portions of your
-    overall change allows you to continue coding while you wait for your current
-    CL in review.
--   **Simpler to roll back.** A large CL will more likely touch files that get
-    updated between the initial CL submission and a rollback CL, complicating
-    the rollback (the intermediate CLs will probably need to be rolled back
-    too).
+"너무 크다"에 대한 단단하고 빠른 규칙은 없습니다.
+100 줄이면 대개 적절한 크기이고, 1,000줄이면 보통 너무 크다고 판단하지만, 리뷰어의 판단에 달려있습니다.
+수정이 몇 개의 파일을 건드리는지도 역시 "크기"에 영향을 줍니다.
+한 파일의 200 줄을 수정하는 것은 괜찮지만, 200 줄을 50개 파일어 걸쳐 수정하는 것은 보통 너무 큽니다.
 
-Note that **reviewers have discretion to reject your change outright for the
-sole reason of it being too large.** Usually they will thank you for your
-contribution but request that you somehow make it into a series of smaller
-changes. It can be a lot of work to split up a change after you've already
-written it, or require lots of time arguing about why the reviewer should accept
-your large change. It's easier to just write small CLs in the first place.
+당신은 코드를 작성한 그 순간부터 그 코드가 친밀하게 느껴질테지만, 리뷰어는 그러한 맥락이 없다는 것을 잊지 말아야 합니다.
+당신에게는 적적한 크기의 CL이 리뷰어에게는 압도적인 크기일 수도 있습니다.
+헷갈리면 더 작은 CL을 작성해봅시다.
+리뷰어는 CL이 너무 작다고 불평하지 않을 것입니다.
 
-## What is Small? {#what_is_small}
-
-In general, the right size for a CL is **one self-contained change**. This means
-that:
-
--   The CL makes a minimal change that addresses **just one thing**. This is
-    usually just one part of a feature, rather than a whole feature at once. In
-    general it's better to err on the side of writing CLs that are too small vs.
-    CLs that are too large. Work with your reviewer to find out what an
-    acceptable size is.
--   The CL should [include related test code](#test_code).
--   Everything the reviewer needs to understand about the CL (except future
-    development) is in the CL, the CL's description, the existing codebase, or a
-    CL they've already reviewed.
--   The system will continue to work well for its users and for the developers
-    after the CL is checked in.
--   The CL is not so small that its implications are difficult to understand. If
-    you add a new API, you should include a usage of the API in the same CL so
-    that reviewers can better understand how the API will be used. This also
-    prevents checking in unused APIs.
-
-There are no hard and fast rules about how large is "too large." 100 lines is
-usually a reasonable size for a CL, and 1000 lines is usually too large, but
-it's up to the judgment of your reviewer. The number of files that a change is
-spread across also affects its "size." A 200-line change in one file might be
-okay, but spread across 50 files it would usually be too large.
-
-Keep in mind that although you have been intimately involved with your code from
-the moment you started to write it, the reviewer often has no context. What
-seems like an acceptably-sized CL to you might be overwhelming to your reviewer.
-When in doubt, write CLs that are smaller than you think you need to write.
-Reviewers rarely complain about getting CLs that are too small.
 
 ## When are Large CLs Okay? {#large_okay}
 
