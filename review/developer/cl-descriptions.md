@@ -1,79 +1,67 @@
-# Writing good CL descriptions
+# 좋은 CL 설명 작성하기
+
+CL 설명은 **뭐**가 **왜** 변했는지에 대한 공개적인 기록입니다.
+버전 컨트롤 기록의 영구적인 일부분이 될 것이고, 아마도 수년에 걸쳐 리뷰어 이외의 수백명의 사람이 읽게 될 것입니다.
 
 
+미래의 개발자는 CL 설명을 근거로 당신의 CL을 검색할 것입니다.
+미래의 누군가는 구체적인 것은 없지만 관련된 희미한 기억으로 당신의 수정을 찾을 수도 있습니다.
+모든 중요한 정보가 코드에만 있고 설명이 없으면, 당신의 CL을 찾는 일이 더 어려워집니다.
 
-A CL description is a public record of **what** change is being made and **why**
-it was made. It will become a permanent part of our version control history, and
-will possibly be read by hundreds of people other than your reviewers over the
-years.
 
-Future developers will search for your CL based on its description. Someone in
-the future might be looking for your change because of a faint memory of its
-relevance but without the specifics handy. If all the important information is
-in the code and not the description, it's going to be a lot harder for them to
-locate your CL.
+## 첫줄 {#firstline}
 
-## First Line {#firstline}
+*   완료된 내용에 대한 짧은 요약.
+*   마치 명령처럼 쓰여진 완벽한 문장.
+*   다음에 빈 줄이 따름.
 
-*   Short summary of what is being done.
-*   Complete sentence, written as though it was an order.
-*   Follow by empty line.
+CL 설명의 **첫줄**은 *CL이 완료한 것이* **무엇**인지를 *분명하게* 밝히는 짧은 요약이어야 합니다.
+그리고 다음에 빈 줄이 이어집니다.
+첫줄은 버전 컨트롤 기록의 요약에 나타나는 것이기 때문에, 나중에 코드를 검색할 사람이 당신의 CL이 실제로 뭘 *했는지* 또는 다른 CL이랑 뭐가 다른지를 이해하기 위해서 CL 자체나 설명 전체를 읽을 필요가 없도록 충분한 정보를 담고 있어야 합니다.
+즉, 첫줄은 코드 기록을 더 빠르게 훑어볼 수 있도록 독립적이어야 합니다.
 
-The **first line** of a CL description should be a short summary of
-*specifically* **what** *is being done by the CL*, followed by a blank line.
-This is what appears in version control history summaries, so it should be
-informative enough that future code searchers don't have to read your CL or its
-whole description to understand what your CL actually *did* or how it differs
-from other CLs. That is, the first line should stand alone, allowing readers to
-skim through code history much faster.
+첫줄을 짧고, 집중적이고, 간단명료하게 쓰도록 노력해야 합니다.
+명확하고 유용하게 읽을 수 있도록 하는 것이 최고 관심사여야 합니다.
 
-Try to keep your first line short, focused, and to the point. The clarity and
-utility to the reader should be the top concern.
+전통적으로 CL 설명의 첫줄은 마치 명령처럼 쓰여진 하나의 완벽한 문장입니다.
+예를 들면, \"**Delete** the FizzBuzz RPC and **replace** it with the new system." 처럼 명령문의 형태입니다. (한글 커밋 메시지에서는 그냥 평문이어도 될 것 같은데...)
+그렇지만 CL 설명의 나머지 부분을 명령형으로 쓸 필요는 없습니다.
 
-By tradition, the first line of a CL description is a complete sentence, written
-as though it were an order (an imperative sentence). For example, say
-\"**Delete** the FizzBuzz RPC and **replace** it with the new system." instead
-of \"**Deleting** the FizzBuzz RPC and **replacing** it with the new system."
-You don't have to write the rest of the description as an imperative sentence,
-though.
+## 유익한 본문 {#informative}
 
-## Body is Informative {#informative}
+설명의 나머지 부분은 유익해야 합니다.
+풀려고 하는 문제에 대한 짧은 설명을 포함하거나, 왜 이것이 최선의 접근인지를 담을 수 있습니다.
+그 접근에 어떤 단점이 있다면 언급되어야 합니다.
+관련이 있다면 버그 번호나 벤치마크 결과, 디자인 문서에 대한 링크와 같은 배경 정보를 담습니다.
 
-The rest of the description should be informative. It might include a brief
-description of the problem that's being solved, and why this is the best
-approach. If there are any shortcomings to the approach, they should be
-mentioned. If relevant, include background information such as bug numbers,
-benchmark results, and links to design documents.
+외부 리소스에 대한 링크를 담는 경우, 접근 제한이나 보유 정책으로 나중에 접근할 수도 없다는 것을 고려해야 합니다.
+가능한 경우 리뷰어와 나중에 읽을 사람이 CL을 이해할 수 있도록 충분한 문맥을 담습니다.
 
-If you include links to external resources consider that they may not be visible
-to future readers due to access restrictions or retention policies. Where
-possible include enough context for reviewers and future readers to understand
-the CL.
+작은 CL 조차도 디테일에 신경 쓰는 것이 좋습니다.
+CL을 이해할 수 있는 맥락을 담읍시다.
 
-Even small CLs deserve a little attention to detail. Put the CL in context.
 
-## Bad CL Descriptions {#bad}
+## 나쁜 CL 설명 {#bad}
 
-"Fix bug" is an inadequate CL description. What bug? What did you do to fix it?
-Other similarly bad descriptions include:
+"Fix bug(버그 수정)"는 부적절한 CL 설명입니다.
+어떤 버그인지, 무엇을 수정했는지, 이런 내용이 빠져있습니다.
+비슷하게 나쁜 설명의 예시는 다음과 같습니다:
 
--   "Fix build."
--   "Add patch."
--   "Moving code from A to B."
--   "Phase 1."
--   "Add convenience functions."
--   "kill weird URLs."
+-   "Fix build(빌드 수정)."
+-   "Add patch(패치 추가)."
+-   "Moving code from A to B(A에서 B로 코드 이동)."
+-   "Phase 1(단계 1)."
+-   "Add convenience functions(편의 함수 추가)."
+-   "kill weird URLs(이상한 URL 삭제)."
 
-Some of those are real CL descriptions. Although short, they do not provide
-enough useful information.
+이 중 몇 개는 실제 CL 설명에서 발췌했습니다.
+짧긴 하지만, 충분히 유용하지 못합니다.
 
-## Good CL Descriptions {#good}
+## 좋은 CL 설명 {#good}
 
-Here are some examples of good descriptions.
+좋은 설명에 대한 몇 가지 예시입니다.
 
-### Functionality change
-
-Example:
+### 기능 수정
 
 > rpc: remove size limit on RPC server message freelist.
 >
@@ -82,13 +70,12 @@ Example:
 > slowly over time, so that idle servers eventually release all freelist
 > entries.
 
-The first few words describe what the CL actually does. The rest of the
-description talks about the problem being solved, why this is a good solution,
-and a bit more information about the specific implementation.
+앞부분의 몇 글자는 CL이 정확히 뭘 하는지 설명합니다.
+나머지 부분은 해결하려는 문제를 설명하고, 왜 이게 좋은 해결책이며, 구체적인 구현에 대한 정보를 담고 있습니다.
 
-### Refactoring
 
-Example:
+### 리팩토링
+
 
 > Construct a Task with a TimeKeeper to use its TimeStr and Now methods.
 >
@@ -103,14 +90,11 @@ Example:
 >
 > Continuing the long-range goal of refactoring the Borglet Hierarchy.
 
-The first line describes what the CL does and how this is a change from the
-past. The rest of the description talks about the specific implementation, the
-context of the CL, that the solution isn't ideal, and possible future direction.
-It also explains *why* this change is being made.
+첫줄은 CL이 무엇을 하는지와 과거와 어떻게 다른지 설명합니다.
+나머지 부분은 구체적인 구현, 이 해결책이 이상적이지는 않다는 것을 밝히는 CL의 문맥, 그리고 가능한 미래 방향에 대해 얘기합니다.
+또한 *왜* 이 수정이 이루어졌는지도 설명합니다.
 
-### Small CL that needs some context
-
-Example:
+### 약간의 문맥이 필요한 작은 CL
 
 > Create a Python3 build rule for status.py.
 >
@@ -120,21 +104,19 @@ Example:
 > instead of Python2, and significantly simplifies some automated build file
 > refactoring tools being worked on currently.
 
-The first sentence describes what's actually being done. The rest of the
-description explains *why* the change is being made and gives the reviewer a lot
-of context.
+첫번째 문장은 정확히 뭘 완료했는지 설명합니다.
+나머지는 *왜* 이 수정이 이루어졌는지를 설명하면서 리뷰어에게 많은 문맥을 제공합니다.
 
-## Generated CL descriptions
+## 자동으로 생성된 CL 설명
 
-Some CLs are generated by tools. Whenever possible, their descriptions should
-also follow the advice here. That is, their first line should be short, focused,
-and stand alone, and the CL description body should include informative details
-that help reviewers and future code searchers understand each CL's effect.
+어떤 CL은 도구에 의해 생성됩니다.
+가능하다면, 이렇게 생성된 CL의 설명도 여기에 있는 조언을 따라야 합니다.
+즉, 첫줄은 짧고, 집중적이고, 독립적이어야 하고 CL 설명 본문은 리뷰어와 나중에 코드를 검색할 사람이 CL의 영향을 이해하는데 도움을 주는 유익한 세부 사항을 담아야 합니다.
 
-## Review the description before submitting the CL
+## CL을 제출하기 전에 설명을 리뷰하기
 
-CLs can undergo significant change during review. It can be worthwhile to review
-a CL description before submitting the CL, to ensure that the description still
-reflects what the CL does.
+리뷰가 진행되면서 CL은 커다란 수정을 겪을 수도 있습니다.
+이럴 때는 CL을 제출하기 전에 CL의 설명이 제대로 되었는지 한번 더 확인해볼 가치가 있습니다.
+이를 통해 CL이 무엇을 하는지를 설명이 잘 반영하고 있는지 확인할 수 있습니다.
 
-Next: [Small CLs](small-cls.md)
+다음: [작은 CL](small-cls.md)
